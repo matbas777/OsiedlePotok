@@ -27,8 +27,8 @@ class Vote(models.Model):
 
 
 class SingleVote(models.Model):
-    class Meta:
-        unique_together = ("inhabitant", "vote")
+    # class Meta:
+    #     unique_together = ("inhabitant", "vote")
 
     class VoteChoice(models.TextChoices):
         yes = "TAK", "TAK"
@@ -41,11 +41,14 @@ class SingleVote(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=264)
+    post_title = models.CharField(max_length=264)
     description = models.TextField()
     post_date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(null=True, blank=True)
     inhabitant = models.ForeignKey(Inhabitant, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.post_title
 
 
 class Comment(models.Model):
