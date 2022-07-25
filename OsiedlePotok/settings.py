@@ -129,10 +129,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'NaszeOsiedle/static/images')
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_BACKEND = 'django.core.mail.backend.smtp.EmailBackend'
+
+# EMAIL_BACKEND = 'django.core.mail.backend.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_HOST_PASSWORD = "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"
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')

@@ -4,6 +4,14 @@ from rest_framework import serializers
 from NaszeOsiedle.models import Inhabitant, Vote, SingleVote, Post, Comment
 
 
+class IsLoggedInMixin:
+    def validate(self, obj):
+        user = obj.get('inhabitant')
+        user_in = self.context['request'].user
+        if not user == user_in:
+            raise serializers.ValidationError('Aby dodac post musisz byc zalogowany')
+        return obj
+
 class InhabitantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inhabitant
@@ -97,7 +105,7 @@ class SingleVoteSerializer(serializers.ModelSerializer):
         return obj
 
 
-class PostSerializer(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer, IsLoggedInMixin):
 
     class Meta:
         model = Post
@@ -110,15 +118,10 @@ class PostSerializer(serializers.ModelSerializer):
             "inhabitant"
         )
 
-    def validate(self, obj):
-        user = obj.get('inhabitant')
-        user_in = self.context['request'].user
-        if not user == user_in:
-            raise serializers.ValidationError('Aby dodac post musisz byc zalogowany')
-        return obj
 
 
-class CommentPostSerializer(serializers.ModelSerializer):
+
+class CommentPostSerializer(serializers.ModelSerializer, IsLoggedInMixin):
 
     class Meta:
         model = Comment
@@ -131,12 +134,7 @@ class CommentPostSerializer(serializers.ModelSerializer):
             "inhabitant"
         )
 
-    def validate(self, obj):
-        user = obj.get('inhabitant')
-        user_in = self.context['request'].user
-        if not user == user_in:
-            raise serializers.ValidationError('Aby dodac komentarz musisz byc zalogowany')
-        return obj
+
 
 
     # {
